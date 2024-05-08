@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { registerUser,
          loginUser,
-         logoutUser 
+         logoutUser,
+         registerFreelancerOrhirer,
         } from "../controller/users.controller.js";
 import {upload} from "../middleware/multer.middleware.js";
 import {verifyJWT} from "../middleware/auth.middleware.js"
@@ -20,6 +21,7 @@ router.route("/register")
         )
 
 router.route("/register").post(registerUser)
+router.route("/register/nextStep").post(verifyJWT , registerFreelancerOrhirer)
 
 router.route("/login").post( loginUser )
 

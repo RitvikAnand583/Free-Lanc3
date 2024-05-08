@@ -25,6 +25,10 @@ const userFreelancerSchema = new Schema(
             type: Map,
             of: String,
             required: true,
+        },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
         }
 
     },
