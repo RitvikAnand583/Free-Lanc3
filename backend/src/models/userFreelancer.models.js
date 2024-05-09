@@ -12,6 +12,10 @@ const userFreelancerSchema = new Schema(
             type: String,
             required: true,
         },
+        category:{
+            type: [String],
+            required: true
+        },
         skills: {
             type: Map,
             of: String,

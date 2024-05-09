@@ -138,7 +138,7 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
         )
     }
     else{
-        const {fieldExperience, skills ,links ,  discription , fullName} = req.body
+        const {fieldExperience, category , skills ,links ,  discription , fullName} = req.body
     
         if ([discription , fullName ] 
             .some((field) => field?.trim() === ""))
@@ -146,7 +146,7 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
                 throw new ApiError(400, "All fields are required")
             }
 
-        if ([fieldExperience, skills ,links  ] 
+        if ([fieldExperience, skills ,links ,category  ] 
             .some((field) => field?.length == 0 ))
             {
                 throw new ApiError(400, "All fields are required")
@@ -157,7 +157,8 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
             discription,
             fieldExperience,
             skills,
-            links
+            links,
+            category
         })
 
         const createdUser = await userFreelancer.findById(freelancerDetails._id)
