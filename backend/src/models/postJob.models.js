@@ -25,7 +25,8 @@ const postJobSchema = new Schema(
         },
         Budget: {
             type: Number,
-            required: true
+            required: true,
+            index: true
         },
         owner: {
             type: Schema.Types.ObjectId,
