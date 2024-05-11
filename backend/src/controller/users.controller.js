@@ -102,8 +102,8 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
     // took data from form 
     // check all data
     // upload the data 
-
-    if(req.user.userType == "freelancer"){
+    console.log(req.user.userType);
+    if(req.user.userType == "hirer"){
         const {requirement, fieldOfWork ,links , skillRequired , discription , fullName} = req.body
     
         if ([discription , fullName ] 
@@ -158,7 +158,7 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
             fieldExperience,
             skills,
             links,
-            category
+            category,
         })
 
         const createdUser = await userFreelancer.findById(freelancerDetails._id)

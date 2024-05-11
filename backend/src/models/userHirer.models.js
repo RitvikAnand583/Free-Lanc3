@@ -23,7 +23,7 @@ const userHirerSchema = new Schema(
             required: true,
         },
         fieldOfWork:{
-            type:[String],
+            type:Map,
             required: true,
         },
         requirement:{
@@ -31,9 +31,17 @@ const userHirerSchema = new Schema(
             of: String,
             required: true,
         },
+        jobsOption:{
+            type:Number,
+            default: 0
+        },
         owner: {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User"
+        },
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "postJobs"
         }
 
     },

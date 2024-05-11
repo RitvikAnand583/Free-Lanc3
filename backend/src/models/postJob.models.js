@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import { userHirer } from "./userHirer.models.js";
 
 const postJobSchema = new Schema(
     {
@@ -29,7 +30,7 @@ const postJobSchema = new Schema(
             index: true
         },
         owner: {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "userHirer"
         }
 
