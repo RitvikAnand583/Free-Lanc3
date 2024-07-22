@@ -4,7 +4,8 @@ import { registerUser,
          logoutUser,
          registerFreelancerOrhirer,
         } from "../controller/users.controller.js";
-import { postJob } from "../controller/postJob.controller.js";
+import { postJob
+        } from "../controller/postJob.controller.js";
 import {upload} from "../middleware/multer.middleware.js";
 import {verifyJWT} from "../middleware/auth.middleware.js"
 

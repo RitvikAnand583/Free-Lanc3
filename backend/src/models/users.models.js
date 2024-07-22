@@ -32,10 +32,13 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Password is required']
         },
+        nextStep: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "userHirer" || "userFreelancer"
+        },
         refreshToken: {
             type: String
         }
-
     },
     {
         timestamps: true

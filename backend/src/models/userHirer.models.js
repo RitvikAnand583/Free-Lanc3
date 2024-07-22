@@ -27,21 +27,16 @@ const userHirerSchema = new Schema(
             required: true,
         },
         requirement:{
-            type: Map,
-            of: String,
+            type: Object,
             required: true,
         },
         jobsOption:{
             type:Number,
             default: 0
         },
-        owner: {
+        nextStep: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "postJobs"
+            ref: "userHirer" || "userFreelancer"
         }
 
     },

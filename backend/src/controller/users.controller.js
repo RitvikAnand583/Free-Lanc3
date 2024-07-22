@@ -4,6 +4,7 @@ import {ApiResponce} from "../utils/apiResponce.js"
 import { User } from "../models/users.models.js"
 import { userFreelancer } from "../models/userFreelancer.models.js"
 import { userHirer } from "../models/userHirer.models.js"
+import { postJobs } from "../models/postJob.models.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.utils.js"
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -63,6 +64,7 @@ const registerUser = asyncHandler(async (req,res) => {
    if (!avatar) {
        throw new ApiError(400, "Avatar file is required")
    }
+
     const userdetails = await User.create({
         username: username,
         avatar: avatar?.url || "",
@@ -102,7 +104,7 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
     // took data from form 
     // check all data
     // upload the data 
-    console.log(req.user.userType);
+    
     if(req.user.userType == "hirer"){
         const {requirement, fieldOfWork ,links , skillRequired , discription , fullName} = req.body
     
@@ -133,11 +135,27 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
             throw new ApiError(500, "Something went wrong while registering the user")
         }
 
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set: {
+                    nextStep: hirerDetails._id  // this removes the field from document
+                }
+            },
+            {
+                new: true
+            }
+        )
+
         return res.status(201).json(
             new ApiResponce(200, createdUser, "User registered Successfully")
         )
     }
+
     else{
+
+        //TODO: category as array  and manully update of job option after new job created
+
         const {fieldExperience, category , skills ,links ,  discription , fullName} = req.body
     
         if ([discription , fullName ] 
@@ -152,6 +170,22 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
                 throw new ApiError(400, "All fields are required")
             }
 
+        const detial  = await postJobs.aggregate([
+            {
+                $match: {
+                    category: category
+                }
+            },
+            {
+                $project: {
+                    _id: 1
+                }
+            }
+        ])
+        if(!detial?.length){
+            throw new ApiError(404, "job Detial not exit")
+        }
+
         const freelancerDetails = await userFreelancer.create({
             fullName,
             discription,
@@ -159,6 +193,7 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
             skills,
             links,
             category,
+            jobOption: detial?.length
         })
 
         const createdUser = await userFreelancer.findById(freelancerDetails._id)
@@ -167,10 +202,25 @@ const registerFreelancerOrhirer = asyncHandler(async (req , res ) => {
             throw new ApiError(500, "Something went wrong while registering the user")
         }
 
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set: {
+                    nextStep: freelancerDetails._id  // this removes the field from document
+                }
+            },
+            {
+                new: true
+            }
+        )
+
+        
+
         return res.status(201).json(
             new ApiResponce(200, createdUser, "User registered Successfully")
         )
     }
+
 })
 
 const loginUser = asyncHandler(async (req,res) => {

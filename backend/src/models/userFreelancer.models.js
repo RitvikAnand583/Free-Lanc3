@@ -30,9 +30,9 @@ const userFreelancerSchema = new Schema(
             of: String,
             required: true,
         },
-        owner: {
-            type: Schema.Types.ObjectId,
-            ref: "User"
+        jobOption:{
+            type:Number,
+            default: 0
         }
 
     },
