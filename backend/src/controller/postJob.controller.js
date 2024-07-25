@@ -55,7 +55,7 @@ const postJob = asyncHandler(async(req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponce(200, {}, "Job posted"))
+    .json(new ApiResponce(200, { }, "Job posted"))
 })
 
 // const jobDetial = asyncHandler(async(req, res) => {
